@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProdutcsModule } from './produtcs/produtcs.module';
+import { ProductsModule } from './products/products.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { CustomersModule } from './customers/customers.module';
 import { OrdersModule } from './orders/orders.module';
@@ -11,7 +11,7 @@ import { OrdersModule } from './orders/orders.module';
   declarations: [],
   imports: [
     CommonModule,
-    ProdutcsModule,
+    ProductsModule,
     DashboardModule,
     CustomersModule,
     OrdersModule
