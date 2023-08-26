@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,25 +13,31 @@ import { ProductService } from 'src/app/services/common/models/product.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BaseComponent implements OnInit {
-  constructor(spinner: NgxSpinnerService,private productSerivece: ProductService, private alertifyService: AlertifyService){
+  constructor(spinner: NgxSpinnerService,private productSerice: ProductService, private alertifyService: AlertifyService){
     super(spinner)
   }
 
-  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updatedDate'];
-  dataSource: MatTableDataSource<List_Product> = null;
+  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updatedDate', 'edit', 'delete'];
+  dataSource: MatTableDataSource<List_Product> =null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-
-  async ngOnInit() {
+  async getProducts(){
     this.showSpinner(SpinnerType.BallAtom);
-    const allProducts: List_Product[]= await this.productSerivece.read(()=>this.hideSpinner(SpinnerType.BallAtom), errorMessage=> 
+    const allProducts: {totalCount: number; products: List_Product[]}= await this.productSerice.read(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize: 5, ()=>this.hideSpinner(SpinnerType.BallAtom), errorMessage=> 
     this.alertifyService.message(errorMessage,{
       dismissOthers:true,
       messageType:MessageType.Error,
       position: Position.TopRight
     }));
-    this.dataSource= new MatTableDataSource<List_Product>(allProducts);
-    this.dataSource.paginator = this.paginator;
+    this.dataSource= new MatTableDataSource<List_Product>(allProducts.products);
+    this.paginator.length= allProducts.totalCount;
+  }
 
+  async pageChanged(){
+    await this.getProducts();
+  }
+
+  async ngOnInit() {
+    await this.getProducts();
   }
 }
