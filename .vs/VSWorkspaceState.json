@@ -7,8 +7,10 @@
     "\\src\\app\\admin\\components",
     "\\src\\app\\admin\\components\\products",
     "\\src\\app\\admin\\components\\products\\list",
-    "\\src\\assets"
+    "\\src\\app\\services",
+    "\\src\\app\\services\\common",
+    "\\src\\app\\services\\common\\file-upload"
   ],
-  "SelectedNode": "\\src\\app\\admin\\components\\products\\list\\list.component.ts",
+  "SelectedNode": "\\tsconfig.json",
   "PreviewInSolutionExplorer": false
 }
